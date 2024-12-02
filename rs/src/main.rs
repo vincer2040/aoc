@@ -1,10 +1,11 @@
 use std::io::Read;
 
-mod day1;
+pub mod day1;
+pub mod day2;
 
 fn main() {
     let input = get_input();
-    let result = day1::part_two(&input);
+    let result = day2::part_two(&input);
     println!("result: {}", result);
 }
 
