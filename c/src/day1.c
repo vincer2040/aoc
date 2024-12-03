@@ -87,7 +87,7 @@ uint32_t day1_part2(const vstr* input) {
     for (size_t i = 0; i < count; ++i) {
         uint32_t cur = lhs[i];
         if (u32_map_contains(&map, &cur)) {
-            u32_map_Iter iter = u32_map_find(&map, &cur);
+            u32_map_Iter iter =u32_map_find(&map, &cur);
             uint32_t x = u32_map_Iter_get(&iter)->val;
             result += (x * cur);
             continue;
