@@ -13,7 +13,11 @@ enum Dir {
 }
 
 pub fn part_one(input: &str) -> u32 {
-    let grid: Vec<&str> = input.trim().lines().collect();
+    let grid: Vec<Vec<char>> = input
+        .trim()
+        .lines()
+        .map(|line| line.chars().collect())
+        .collect();
     let start_position = get_start_position(&grid);
     return walk(
         &grid,
@@ -26,7 +30,11 @@ pub fn part_one(input: &str) -> u32 {
 }
 
 pub fn part_two(input: &str) -> u32 {
-    let grid: Vec<&str> = input.trim().lines().collect();
+    let grid: Vec<Vec<char>> = input
+        .trim()
+        .lines()
+        .map(|line| line.chars().collect())
+        .collect();
     let start_position = get_start_position(&grid);
     return walk_two(
         &grid,
@@ -41,7 +49,7 @@ pub fn part_two(input: &str) -> u32 {
 }
 
 fn walk_two(
-    grid: &Vec<&str>,
+    grid: &Vec<Vec<char>>,
     position: Point,
     dir: Dir,
     max_y: usize,
@@ -53,7 +61,7 @@ fn walk_two(
     if !is_in_bounds(&position, max_x, max_y) {
         return *num_obs;
     }
-    if grid[position.y as usize].as_bytes()[position.x as usize] == b'#' {
+    if grid[position.y as usize][position.x as usize] == '#' {
         let (next_position, next_dir) = position.next_point_change_dir(dir);
         return walk_two(
             grid,
@@ -70,11 +78,9 @@ fn walk_two(
     match point_to_check {
         Some(p) if !seen.contains(&p) && p != *start_position => {
             let mut grid_clone = grid.clone();
-            let mut line = grid_clone[p.y as usize].to_string();
-            unsafe {
-                line.as_bytes_mut()[p.x as usize] = b'#';
-            }
-            grid_clone[p.y as usize] = &line;
+            let mut line = grid_clone[p.y as usize].clone();
+            line[p.x as usize] = '#';
+            grid_clone[p.y as usize] = line;
             if check_for_cycle(
                 &grid_clone,
                 position,
@@ -103,7 +109,7 @@ fn walk_two(
 }
 
 fn check_for_cycle(
-    grid: &Vec<&str>,
+    grid: &Vec<Vec<char>>,
     position: Point,
     dir: Dir,
     max_x: usize,
@@ -116,7 +122,7 @@ fn check_for_cycle(
     if seen.contains(&(position, dir)) {
         return true;
     }
-    if grid[position.y as usize].as_bytes()[position.x as usize] == b'#' {
+    if grid[position.y as usize][position.x as usize] == '#' {
         let (next_position, next_dir) = position.next_point_change_dir(dir);
         return check_for_cycle(grid, next_position, next_dir, max_x, max_y, seen);
     }
@@ -126,7 +132,7 @@ fn check_for_cycle(
 }
 
 fn walk(
-    grid: &Vec<&str>,
+    grid: &Vec<Vec<char>>,
     position: Point,
     dir: Dir,
     seen: &mut std::collections::HashSet<Point>,
@@ -136,7 +142,7 @@ fn walk(
     if !is_in_bounds(&position, max_x, max_y) {
         return seen.len() as u32;
     }
-    if grid[position.y as usize].as_bytes()[position.x as usize] == b'#' {
+    if grid[position.y as usize][position.x as usize] == '#' {
         let (new_position, new_dir) = position.next_point_change_dir(dir);
         return walk(grid, new_position, new_dir, seen, max_x, max_y);
     }
@@ -145,10 +151,10 @@ fn walk(
     return walk(grid, new_position, dir, seen, max_x, max_y);
 }
 
-fn get_start_position(grid: &Vec<&str>) -> Point {
+fn get_start_position(grid: &Vec<Vec<char>>) -> Point {
     for (y, line) in grid.iter().enumerate() {
-        for (x, ch) in line.chars().enumerate() {
-            if ch == '^' {
+        for (x, ch) in line.iter().enumerate() {
+            if *ch == '^' {
                 return Point {
                     x: x as isize,
                     y: y as isize,
@@ -224,12 +230,12 @@ impl Point {
     fn point_to_check(
         self,
         dir: Dir,
-        grid: &Vec<&str>,
+        grid: &Vec<Vec<char>>,
         max_x: usize,
         max_y: usize,
     ) -> Option<Self> {
         let p = self.next_point(dir);
-        if is_in_bounds(&p, max_x, max_y) && grid[p.y as usize].as_bytes()[p.x as usize] != b'#' {
+        if is_in_bounds(&p, max_x, max_y) && grid[p.y as usize][p.x as usize] != '#' {
             return Some(p);
         }
         return None;
