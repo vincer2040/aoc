@@ -16,7 +16,7 @@ pub mod day13;
 
 fn main() {
     let input = get_input();
-    let result = day12::part_two(&input);
+    let result = day13::part_two(&input);
     println!("result: {}", result);
 }
 
