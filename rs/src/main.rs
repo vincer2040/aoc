@@ -10,10 +10,12 @@ pub mod day07;
 pub mod day08;
 pub mod day09;
 pub mod day10;
+pub mod day11;
+pub mod day12;
 
 fn main() {
     let input = get_input();
-    let result = day10::part_two(&input);
+    let result = day12::part_two(&input);
     println!("result: {}", result);
 }
 
