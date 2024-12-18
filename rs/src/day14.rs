@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 #[derive(Debug, Clone, Copy)]
 struct Point {
     x: usize,
@@ -180,18 +178,6 @@ fn parse_input(input: &str) -> Vec<Robot> {
         });
         return acc;
     })
-}
-
-fn print_grid(grid: &Vec<Vec<Option<Vec<Velocity>>>>) {
-    for row in grid {
-        for robot in row {
-            match robot {
-                Some(r) => print!("{} ", r.len()),
-                None => print!("0 "),
-            }
-        }
-        println!("");
-    }
 }
 
 impl Into<Point> for IPoint {

@@ -361,15 +361,6 @@ fn parse_input(input: &str, part_two: bool) -> (Vec<Vec<char>>, Vec<Direction>) 
     return (puzzle, directions);
 }
 
-fn print_puzzle(puzzle: &Vec<Vec<char>>) {
-    for row in puzzle {
-        for ch in row {
-            print!("{}", ch);
-        }
-        println!("");
-    }
-}
-
 impl From<char> for Direction {
     fn from(value: char) -> Self {
         match value {
