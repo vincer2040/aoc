@@ -15,11 +15,15 @@ pub mod day12;
 pub mod day13;
 pub mod day14;
 pub mod day15;
+pub mod day16;
+pub mod day17;
+pub mod day18;
+pub mod day19;
 
 fn main() {
     let input = get_input();
-    let result = day15::part_two(&input);
-    println!("result: {}", result);
+    let result = day19::part_two(&input);
+    println!("result: {:#?}", result);
 }
 
 fn get_input() -> String {
