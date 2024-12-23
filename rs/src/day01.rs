@@ -2,11 +2,7 @@ pub fn part_one(input: &str) -> u32 {
     let mut lhs = Vec::new();
     let mut rhs = Vec::new();
     input
-        .split('\n')
-        .into_iter()
-        .filter(|line| {
-            *line != ""
-        })
+        .lines()
         .for_each(|line| {
             let split: Vec<&str> = line.split("   ").collect();
             assert_eq!(split.len(), 2);
@@ -35,11 +31,7 @@ pub fn part_two(input: &str) -> u32 {
     let mut lhs = Vec::new();
     let mut rhs = Vec::new();
     input
-        .split('\n')
-        .into_iter()
-        .filter(|line| {
-            *line != ""
-        })
+        .lines()
         .for_each(|line| {
             let split: Vec<&str> = line.split("   ").collect();
             assert_eq!(split.len(), 2);
